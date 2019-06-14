@@ -1,0 +1,946 @@
+WindowManager:
+    LoginWindow:
+    RelationshipPage
+    GenerateConnection
+    RecieveInvitation
+
+<Button>:
+	color:0,0,0,1
+	size_hint: 0.5,0.1
+
+<LoginWindow>:
+    name: "main"
+	walletName: walletName
+	passphrase: passphrase
+	patient: chk_patient
+	doctor: chk_doctor
+	state: chk_state
+	FloatLayout:
+		canvas:
+			Color:
+				rgb: [0.37,0.1,0.59,1] #purple
+		    Rectangle:
+			    pos: self.pos
+			    size: self.size
+		Label:
+			text: "MedIC Patient Portal"
+			pos_hint: {"center_x":0.5,"center_y":0.9}
+			font_size: (root.width**2+ root.height**2)/12**4
+			color: (0.97,0.85,0.07,1)
+			bold: True
+		Label:
+			text: "Wallet Name"
+			pos_hint: {"center_x":0.5,"center_y":0.80}
+			font_size: (root.width**2+ root.height**2)/12**4
+		TextInput:
+			id: walletName
+			font_size: (root.width**2+ root.height**2)/12**4
+			multiline: False
+			pos_hint: {"center_x":0.5,"center_y":0.72}
+			size_hint: 0.5, 0.085
+		Label:
+			text: "Passphrase"
+			pos_hint: {"center_x":0.5,"center_y":0.60}
+			font_size: (root.width**2+ root.height**2)/12**4
+		TextInput:
+			id: passphrase
+			font_size: (root.width**2+ root.height**2)/12**4
+			password: True
+			multiline: False
+			pos_hint: {"center_x":0.5,"center_y":0.52}
+			size_hint: 0.5, 0.09
+	    GridLayout:
+	        rows: 3
+	        cols: 2
+		    pos_hint: {"center_x": 0.5, "center_y":0.4}
+		    size_hint: 1, 0.1
+		    Label:
+		        text: 'Patient'
+		    CheckBox:
+		        group: 'user'
+		        id: chk_patient
+		    Label:
+		        text: 'Doctor'
+		    CheckBox:
+		        group: 'user'
+		        id: chk_doctor
+		    Label:
+		        text: 'State/Hospital'
+		    CheckBox:
+		        group: 'user'
+		        id: chk_state
+		ImageButton:
+		    source: "icons/open_create_button.png"
+			id: btn
+			pos_hint: {"center_x":0.5,"center_y":0.20}
+			size_hint: 0.5, 0.4
+			on_release:
+			    root.manager.transition.direction = "left"
+			    root.login_btn()
+
+
+<UserPage>:
+    name: "userPage"
+    n :name
+    FloatLayout:
+        canvas:
+            Color:
+				rgb: [0.97,0.85,0.07,1]
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.97,0.85,0.07,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 1, "left":1}
+		    size_hint: 1, 0.1
+            Button:
+                text: "Logout"
+                pos_hint:{"center_x":0.1,"center_y":0.95}
+                size_hint: 0.2,0.1
+                background_color: (0,0,0,1)
+                color: (1,1,1,1)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.logout()
+		    Label:
+                id: name
+                color: (0,0,0,1)
+                bold: True
+                pos_hint:{"center_x":0.45, "center_y": 0.95}
+                size_hint: 0.2, 0.1
+                text: "Agent: "
+		GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.37,0.1,0.59,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 4
+		    pos_hint: {"top": 0.9, "left":1}
+		    size_hint: 1, 0.8
+            Button:
+		        text: "SCHEMAS"
+		        bold: True
+		        color: (1,1,1,1)
+                pos_hint:{"center_x":0.1,"center_y":0.70}
+                size_hint: 0.5,0.1
+                background_color: (0.37,0.1,0.59, 1.0)
+                background_normal : ""
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.schemas()
+		    Button:
+		        text: "RELATIONSHIPS"
+		        bold: True
+		        color: (1,1,1,1)
+                pos_hint:{"center_x":0.1,"center_y":0.60}
+                size_hint: 0.5,0.1
+                background_color: (0.37,0.1,0.59, 1.0)
+                background_normal : ""
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.relationships()
+		    Button:
+		        text: "CREDENTIALS"
+		        bold: True
+		        color: (1,1,1,1)
+                pos_hint:{"center_x":0.1,"center_y":0.40}
+                size_hint: 0.5,0.1
+                background_color: (0.37,0.1,0.59, 1.0)
+                background_normal : ""
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.credentials()
+		    Button:
+		        text: "PROVE"
+		        bold: True
+		        color: (1,1,1,1)
+                pos_hint:{"center_x":0.1,"center_y":0.30}
+                size_hint: 0.5, 0.1
+                background_color: (0.37,0.1,0.59, 1.0)
+                background_normal : ""
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.prove()
+        GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.37,0.1,0.59,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 0.1, "left":1}
+		    size_hint: 1, 0.1
+            Button:
+                text: "Connect to Server"
+                pos_hint:{"center_x":0.1,"center_y":0.95}
+                size_hint: 0.2,0.1
+                background_color: (0,0,0,1)
+                color: (1,1,1,1)
+                on_release:
+                    root.manager.transition.direction = "up"
+                    root.connect_server()
+            Button:
+                text: "Remove Wallet"
+                pos_hint:{"center_x":0.05,"center_y":0.95}
+                size_hint: 0.2,0.1
+                background_color: (0,0,0,1)
+                color: (1,1,1,1)
+                on_release:
+                    root.manager.transition.direction = "up"
+                    root.delete_wallet()
+
+<RelationshipPage>:
+    name: "relationships"
+    n:name
+    FloatLayout:
+        canvas:
+			Color:
+				rgb: [0.97,0.85,0.07,1]
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.97,0.85,0.07,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 1, "left":1}
+		    size_hint: 1, 0.1
+            Button:
+                text: "Back"
+                pos_hint:{"center_x":0.1,"center_y":0.95}
+                size_hint: 0.2,0.1
+                background_color: (0,0,0,1)
+                color: (1,1,1,1)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.back()
+		    Label:
+                id: name
+                color: (0,0,0,1)
+                pos_hint:{"center_x":0.45, "center_y": 0.95}
+                size_hint: 0.2, 0.1
+                text: "Agent: "
+		        bold: True
+        GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0,0,0,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 0.9, "left":0.5}
+		    size_hint: 1, 0.1
+            Label:
+			    font_size: (root.width**2+ root.height**2)/12**4
+                text: "Pending Connections"
+                color: (1,1,1,1)
+                bold: True
+        GridLayout:
+            canvas:
+			    Color:
+			        rgb: [0.37,0.1,0.59,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 0.8, "left":0.5}
+		    size_hint: 1, 0.05
+            Label:
+                text: "#"
+                bold: True
+            Label:
+                text: "Title"
+                bold: True
+            Label:
+                text: "Status"
+                bold: True
+            Label:
+                text: "History"
+                bold: True
+            Label:
+                text: "Action"
+                bold: True
+        GridLayout:
+            # pending connections
+            id: pendingConnection
+            pos_hint: {"top": 0.75, "left":1}
+            size_hint: 1, 0.25
+            canvas:
+                Color:
+                    rgb: [1,1,1,1]
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            cols: 1
+        GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0,0,0,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 0.55, "left":0.5}
+		    size_hint: 1, 0.1
+            Label:
+			    font_size: (root.width**2+ root.height**2)/12**4
+                text: "Pairwise Connections"
+                color: (1,1,1,1)
+                bold: True
+        GridLayout:
+            canvas:
+			    Color:
+			        rgb: [0.37,0.1,0.59,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 0.45, "left":0.5}
+		    size_hint: 1, 0.05
+            Label:
+                text: "Name"
+                bold: True
+            Label:
+                text: "Their DID"
+                bold: True
+        ScrollView:
+            pos_hint: {"top": 0.4, "left":1}
+            size_hint: 1, 0.2
+            GridLayout:
+                # pairwise connections
+                id: pairwiseConnection
+                canvas:
+                    Color:
+                        rgb: [1,1,1,1]
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                cols: 1
+                spacing: 10,10
+        GridLayout:
+		    rows: 1
+		    pos_hint: {"top": 0.2, "left":0.5}
+		    size_hint: 1, 0.2
+		    ImageButton:
+		        source: "icons/invitation_button.png"
+			    id: btn
+			    pos_hint: {"center_x":0.5,"center_y":0.25}
+			    size_hint: 0.5, 0.5
+			    on_release:
+			        root.manager.transition.direction = "right"
+			        root.generate_connection()
+		    ImageButton:
+		        source: "icons/recieve_invitation.png"
+			    id: btn
+			    pos_hint: {"center_x":0.5,"center_y":0.25}
+			    size_hint: 0.5, 0.5
+			    on_release:
+			        root.manager.transition.direction = "right"
+			        root.recieveInvite()
+
+
+<GenerateConnection>:
+    agent: agent
+    code: code
+    senderEmail: senderEmail
+    code_gen: code_gen
+    FloatLayout:
+        canvas:
+			Color:
+				rgb: [0.37,0.1,0.59,1]
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.97,0.85,0.07,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 1, "left":1}
+		    size_hint: 1, 0.1
+            Button:
+                text: "Back"
+                background_color: (0,0,0,1)
+                color: (1,1,1,1)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.back()
+		    Label:
+                id: agent
+                color: (0,0,0,1)
+                text: "Agent: "
+		        bold: True
+		Label:
+		    id: code
+		    pos_hint: {"center_x": 0.5, "center_y":0.2}
+		    size_hint: 1, 0.2
+            text: "Code Generated: "
+            bold: True
+            text_size: self.size
+        Label:
+            text: "Email: "
+		    pos_hint: {"center_x": 0.15, "center_y":0.75}
+		    size_hint: 0.2, 0.1
+            color: (0,0,0,1)
+			font_size: (root.width**2+ root.height**2)/12**4
+        TextInput:
+		    pos_hint: {"center_x": 0.5, "center_y":0.75}
+            id: senderEmail
+			font_size: (root.width**2+ root.height**2)/12**4
+			multiline: False
+			size_hint: 0.5, 0.085
+        ImageButton:
+            source: "icons/send_button.png"
+			id: btn
+			pos_hint: {"center_x":0.5,"center_y":0.6}
+			size_hint: 0.2, 0.2
+			on_release:
+			    root.manager.transition.direction = "right"
+			    root.sendEmail()
+	    Label:
+	        text: ""
+	        id: code_gen
+		    pos_hint: {"center_x": 0.5, "center_y":0.3}
+		    size_hint: 0.2, 0.1
+		    bold: True
+
+
+
+<RecieveInvitation>:
+    agent: agent
+    copyCode: copyCode
+    rec: rec
+    FloatLayout:
+        canvas:
+			Color:
+				rgb: [0.37,0.1,0.59,1]
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.97,0.85,0.07,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 1, "left":1}
+		    size_hint: 1, 0.1
+            Button:
+                text: "Back"
+                background_color: (0,0,0,1)
+                color: (1,1,1,1)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.back()
+		    Label:
+                id: agent
+                color: (0,0,0,1)
+                text: "Agent: "
+		        bold: True
+        Label:
+            text: "Code: "
+		    pos_hint: {"center_x": 0.15, "center_y":0.75}
+		    size_hint: 0.2, 0.1
+            color: (0,0,0,1)
+			font_size: (root.width**2+ root.height**2)/12**4
+        TextInput:
+		    pos_hint: {"center_x": 0.5, "center_y":0.75}
+            id: copyCode
+			font_size: (root.width**2+ root.height**2)/12**4
+			multiline: False
+			size_hint: 0.5, 0.08
+        ImageButton:
+            source: "icons/submit.png"
+			id: btn
+			pos_hint: {"center_x":0.5,"center_y":0.6}
+			size_hint: 0.2, 0.2
+			on_release:
+			    root.manager.transition.direction = "right"
+			    root.receiveCode()
+	    Label:
+	        text: ""
+	        id: rec
+		    pos_hint: {"center_x": 0.5, "center_y":0.35}
+		    size_hint: 0.2, 0.1
+		    bold: True
+
+<ConnectServer>:
+    agent: agent
+    ip : ip
+    port: port
+    agent: agent
+    connected: connected
+    FloatLayout:
+        canvas:
+			Color:
+				rgb: [0.37,0.1,0.59,1]
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.97,0.85,0.07,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 1, "left":1}
+		    size_hint: 1, 0.1
+            Button:
+                text: "Back"
+                background_color: (0,0,0,1)
+                color: (1,1,1,1)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.back()
+		    Label:
+                id: agent
+                color: (0,0,0,1)
+                text: "Agent: "
+		        bold: True
+        Label:
+            text: "IP: "
+		    pos_hint: {"center_x": 0.15, "center_y":0.75}
+		    size_hint: 0.2, 0.1
+            color: (0,0,0,1)
+			font_size: (root.width**2+ root.height**2)/12**4
+        TextInput:
+		    pos_hint: {"center_x": 0.5, "center_y":0.75}
+            id: ip
+			font_size: (root.width**2+ root.height**2)/12**4
+			multiline: False
+			size_hint: 0.5, 0.08
+        Label:
+            text: "Port: "
+		    pos_hint: {"center_x": 0.15, "center_y":0.55}
+		    size_hint: 0.2, 0.1
+            color: (0,0,0,1)
+			font_size: (root.width**2+ root.height**2)/12**4
+        TextInput:
+		    pos_hint: {"center_x": 0.5, "center_y":0.55}
+            id: port
+			font_size: (root.width**2+ root.height**2)/12**4
+			multiline: False
+			size_hint: 0.5, 0.08
+		Label:
+		    text: ""
+		    id: connected
+		    pos_hint: {"center_x": 0.5, "center_y":0.35}
+		    size_hint: 0.3, 0.1
+            color: (0,0,0,1)
+			font_size: (root.width**2+ root.height**2)/12**4
+		Button:
+		    text: "Connect to Server"
+            pos_hint:{"center_x":0.5,"center_y":0.25}
+            size_hint: 0.35,0.1
+            background_color: (0,0,0,1)
+            color: (1,1,1,1)
+            on_release:
+                root.manager.transition.direction = "right"
+                root.start_server()
+
+<SchemaPage>:
+    name: "schemaPage"
+    n:name
+    FloatLayout:
+        canvas:
+			Color:
+				rgb: [0.37,0.1,0.59,1]
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.97,0.85,0.07,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 1, "left":1}
+		    size_hint: 1, 0.1
+            Button:
+                text: "Back"
+                pos_hint:{"center_x":0.1,"center_y":0.95}
+                size_hint: 0.2,0.1
+                background_color: (0,0,0,1)
+                color: (1,1,1,1)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.back()
+		    Label:
+                id: name
+                pos_hint:{"center_x":0.45, "center_y": 0.95}
+                size_hint: 0.2, 0.1
+                text: "Agent: "
+                color: (0,0,0,1)
+		        bold: True
+        GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0,0,0,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    cols: 3
+		    pos_hint: {"top": 0.9, "left":0.5}
+		    size_hint: 1, 0.05
+            Label:
+			    font_size: (root.width**2+ root.height**2)/12**4
+                text: "MedIC Schemas"
+                color: (1,1,1,1)
+                bold: True
+        GridLayout:
+            canvas:
+			    Color:
+			        rgb: [0.37,0.1,0.59,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 0.85, "left":0.5}
+		    size_hint: 1, 0.05
+            Label:
+                text: "Name"
+                bold: True
+            Label:
+                text: ""
+                bold: True
+            Label:
+                text: "Actions"
+                bold: True
+            Label:
+                text: ""
+                bold: True
+        GridLayout:
+            # pending connections
+            id: pairwiseConnections
+            pos_hint: {"top": 0.8, "left":1}
+            size_hint: 1, 0.8
+            canvas:
+                Color:
+                    rgb: [1,1,1,1]
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            cols: 1
+
+<CredentialsPage>:
+    name: "credentialPage"
+    n:name
+    FloatLayout:
+        canvas:
+			Color:
+				rgb: [0.37,0.1,0.59,1]
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.97,0.85,0.07,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 1, "left":1}
+		    size_hint: 1, 0.1
+            Button:
+                text: "Back"
+                pos_hint:{"center_x":0.1,"center_y":0.95}
+                size_hint: 0.2,0.1
+                background_color: (0,0,0,1)
+                color: (1,1,1,1)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.back()
+		    Label:
+                id: name
+                pos_hint:{"center_x":0.45, "center_y": 0.95}
+                size_hint: 0.2, 0.1
+                text: "Agent: "
+                color: (0,0,0,1)
+		        bold: True
+        GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0,0,0,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 0.9, "left":0.5}
+		    size_hint: 1, 0.1
+            Label:
+			    font_size: (root.width**2+ root.height**2)/12**4
+                text: "Connections"
+                color: (1,1,1,1)
+                bold: True
+        GridLayout:
+            canvas:
+			    Color:
+			        rgb: [0.37,0.1,0.59,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 0.8, "left":0.5}
+		    size_hint: 1, 0.05
+            Label:
+                text: "Name"
+                bold: True
+            Label:
+                text: ""
+                bold: True
+            Label:
+                text: "Actions"
+                bold: True
+        GridLayout:
+            # pending connections
+            id: schema_pairwise
+            pos_hint: {"top": 0.75, "left":1}
+            size_hint: 1, 0.35
+            canvas:
+                Color:
+                    rgb: [1,1,1,1]
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            cols: 1
+        GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0,0,0,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 0.4, "left":0.5}
+		    size_hint: 1, 0.05
+            Label:
+			    font_size: (root.width**2+ root.height**2)/12**4
+                text: "Credentials"
+                color: (1,1,1,1)
+                bold: True
+        GridLayout:
+            id: cred_layout
+            canvas:
+			    Color:
+			        rgb: [0.97,0.85,0.07,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    cols: 2
+		    pos_hint: {"top": 0.35, "left":0.5}
+		    size_hint: 1, 0.35
+
+<ProvePage>:
+    name: "provePage"
+    n:name
+    stateAnchor: stateAnchor
+    hospitalAnchor: hospitalAnchor
+    FloatLayout:
+        canvas:
+			Color:
+				rgb: [0.37,0.1,0.59,1]
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.97,0.85,0.07,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 1, "left":1}
+		    size_hint: 1, 0.1
+            Button:
+                text: "Back"
+                pos_hint:{"center_x":0.1,"center_y":0.95}
+                size_hint: 0.2,0.1
+                background_color: (0,0,0,1)
+                color: (1,1,1,1)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.back()
+		    Label:
+                id: name
+                pos_hint:{"center_x":0.45, "center_y": 0.95}
+                size_hint: 0.2, 0.1
+                text: "Agent: "
+                color: (0,0,0,1)
+		        bold: True
+        GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0,0,0,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 0.9, "left":0.5}
+		    size_hint: 1, 0.1
+            Label:
+			    font_size: (root.width**2+ root.height**2)/12**4
+                text: "Receieve Trust Anchor"
+                color: (1,1,1,1)
+                bold: True
+        GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.37,0.1,0.59,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    cols: 2
+		    pos_hint: {"top": 0.75, "left":0.5}
+		    size_hint: 1, 0.1
+            Label:
+			    font_size: (root.width**2+ root.height**2)/12**4
+                text: "Set State Anchor"
+                color: (1,1,1,1)
+		    TextInput:
+			    id: stateAnchor
+			    font_size: (root.width**2+ root.height**2)/12**4
+			    multiline: False
+			    pos_hint: {"center_x":0.5,"center_y":0.72}
+			    size_hint: 0.5, 0.1
+        GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.37,0.1,0.59,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    cols: 2
+		    pos_hint: {"top": 0.65, "left":0.5}
+		    size_hint: 1, 0.1
+            Label:
+			    font_size: (root.width**2+ root.height**2)/12**4
+                text: "Set Hospital Anchor"
+                color: (1,1,1,1)
+		    TextInput:
+			    id: hospitalAnchor
+			    font_size: (root.width**2+ root.height**2)/12**4
+			    multiline: False
+			    pos_hint: {"center_x":0.5,"center_y":0.72}
+			    size_hint: 0.5, 0.1
+        GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0,0,0,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 0.55, "left":0.5}
+		    size_hint: 1, 0.1
+            Button:
+                text: "Receive Trusted Anchor"
+                pos_hint:{"center_x":0.1,"center_y":0.95}
+                size_hint: 0.2,0.1
+                background_color: (0,0,0,1)
+                color: (1,1,1,1)
+                on_release:
+                    root.trusted_anchor()
+
+<DeleteWalletPage>:
+    name: "deleteWalletPage"
+	walletName: walletName
+	passphrase: passphrase
+	result_delete: result_delete
+	FloatLayout:
+		canvas:
+			Color:
+				rgb: [0.37,0.1,0.59,1]
+		    Rectangle:
+			    pos: self.pos
+			    size: self.size
+		GridLayout:
+            canvas:
+			    Color:
+				    rgb: [0.97,0.85,0.07,1]
+			    Rectangle:
+				    pos: self.pos
+				    size: self.size
+		    rows: 1
+		    pos_hint: {"top": 1, "left":1}
+		    size_hint: 1, 0.1
+            Button:
+                text: "Back"
+                pos_hint:{"center_x":0.1,"center_y":0.95}
+                size_hint: 0.2,0.1
+                background_color: (0,0,0,1)
+                color: (1,1,1,1)
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.back()
+		    Label:
+                id: name
+                pos_hint:{"center_x":0.45, "center_y": 0.95}
+                size_hint: 0.2, 0.1
+                text: " "
+		Label:
+			text: "Remove Wallet"
+			pos_hint: {"center_x":0.5,"center_y":0.9}
+			font_size: (root.width**2+ root.height**2)/12**4
+			color: (0.97,0.85,0.07,1)
+			bold: True
+		Label:
+			text: "Wallet Name"
+			pos_hint: {"center_x":0.5,"center_y":0.80}
+			font_size: (root.width**2+ root.height**2)/12**4
+		TextInput:
+			id: walletName
+			font_size: (root.width**2+ root.height**2)/12**4
+			multiline: False
+			pos_hint: {"center_x":0.5,"center_y":0.72}
+			size_hint: 0.5, 0.085
+		Label:
+			text: "Passphrase"
+			pos_hint: {"center_x":0.5,"center_y":0.55}
+			font_size: (root.width**2+ root.height**2)/12**4
+		TextInput:
+			id: passphrase
+			font_size: (root.width**2+ root.height**2)/12**4
+			password: True
+			multiline: False
+			pos_hint: {"center_x":0.5,"center_y":0.47}
+			size_hint: 0.5, 0.09
+		Button:
+			id: btn
+			text: "Delete Wallet"
+			font_size: (root.width**2+ root.height**2)/12**4
+			pos_hint: {"center_x":0.5,"center_y":0.20}
+			size_hint: 0.5, 0.1
+            background_color: (0,0,0,1)
+			on_release:
+			    root.manager.transition.direction = "left"
+			    root.remove_wallet()
+	    Label:
+	        id: result_delete
+			pos_hint: {"center_x":0.5,"center_y":0.1}
+			font_size: (root.width**2+ root.height**2)/12**4
